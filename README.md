@@ -13,7 +13,7 @@ Dentro de los modelos, tenemos 4 modelos, los cuales son sobre los productos que
 1.0 - Sin embargo, todavía hace falta ajustar detalles de estética y roles dentro de la misma para que los usuarios que quieran ver los productos no puedan también ver lo que hay en stock y poder utilizar el CRUD.
 
 # Video
--
+https://youtu.be/sO6sZSxV7vA?si=s2VxAVoElu9jhlTK
 
 # Usuario
 Nombre de usuario admin: leon
