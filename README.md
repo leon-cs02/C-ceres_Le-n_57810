@@ -1,4 +1,6 @@
-# Proyecto
+# León Cáceres - Comiquería
+Coderhouse - 57810 - Python.
+
 En este repositorio iré subiendo mis avances con el proyecto del curso de Python en CoderHouse.
 
 Mi proyecto trata sobre un control de stock de una comiquería. Para los que no sepan, estos lugares generalmente venden comics, tales como los comics de 
