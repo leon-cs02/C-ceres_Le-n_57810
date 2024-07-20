@@ -51,6 +51,10 @@ urlpatterns = [
 
     path('search/', SearchResultsView.as_view(), name='search_results'),
 
+    #Acerca de mi:
+
+    path('acerca', acerca, name='acerca'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -20,25 +20,28 @@ from django.conf import settings
 
 # Métodos para visualizar en la página los html
 
+#Función para poder ver el index.html
 def index(request):
     mangas = Mangas.objects.all()[:4]  # Traer los primeros 4 mangas
     libros = Libros.objects.all()[:4]  # Traer los primeros 4 libros
     comics = Comics.objects.all()[:4]  # Traer los primeros 4 cómics
+    figuras =  Figuras.objects.all()[:4]
     context = {
         'mangas': mangas,
         'libros': libros,
         'comics': comics,
+        'figuras': figuras,
         'MEDIA_URL': settings.MEDIA_URL,  # Agregar MEDIA_URL al contexto
     }
     return render(request, 'gestion/index.html', context)
 
 #------------------------------------------------------------------------------------------------------------
 
-class CustomLoginView(LoginView):
-    template_name = 'login.html'
-
 #Utilizo CBV para modificar el perfil de usuario, validar los métodos get y post, guardar los datos y finalizar
 #con un mensaje que indique que su perfil fue modificado:
+
+class CustomLoginView(LoginView):
+    template_name = 'login.html'
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'profile.html'
@@ -60,6 +63,8 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
         return self.render_to_response({'u_form': u_form, 'p_form': p_form})
     
+#------------------------------------------------------------------------------------------------------------
+
 #Registro:
 
 class SignUpView(CreateView):
@@ -71,19 +76,24 @@ class SignUpView(CreateView):
 
 #Métodos pertenecientes a los Mangas:
 
+
+#Ver mangas:
 class MangasView(ListView, LoginRequiredMixin):
     model = Mangas
 
+#Subir mangas a la BD:
 class MangasCreate(CreateView, LoginRequiredMixin):
     model = Mangas
     fields = ["nombre","tomo","editorial","autor","demografia","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("mangas")
 
+#Actualizar los datos de la BD de los mangas:
 class MangasUpdate(UpdateView, LoginRequiredMixin):
     model = Mangas
     fields = ["nombre","tomo","editorial","autor","demografia","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("mangas")
 
+#Borrar datos en la BD:
 class MangasDelete(DeleteView, LoginRequiredMixin):
     model = Mangas
     success_url = reverse_lazy("mangas")
@@ -92,19 +102,23 @@ class MangasDelete(DeleteView, LoginRequiredMixin):
 
 #Métodos pertenecientes al Model Cómics:
 
+#Ver Cómics:
 class ComicsView(ListView, LoginRequiredMixin):
     model = Comics
 
+#Subir cómics a la BD:
 class ComicsCreate(CreateView, LoginRequiredMixin):
     model = Comics
     fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("comics")
 
+#Actualizar los datos de la BD de los Cómics:
 class ComicsUpdate(UpdateView, LoginRequiredMixin):
     model = Comics
     fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("comics")
 
+#Borrar datos en la BD:
 class ComicsDelete(DeleteView, LoginRequiredMixin):
     model = Comics
     success_url = reverse_lazy("comics")
@@ -113,25 +127,23 @@ class ComicsDelete(DeleteView, LoginRequiredMixin):
 
 #Métodos pertenecientes al model Libros:
 
+#Ver libros:
 class LibrosView(ListView, LoginRequiredMixin):
     model = Libros
 
 #Método para agregar a la BD:
-
 class LibrosCreate(CreateView, LoginRequiredMixin):
     model = Libros
     fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("libros")
 
 #Método para actualizar los campos de los libros:
-
 class LibrosUpdate(UpdateView, LoginRequiredMixin):
     model = Libros
     fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("libros")
 
 #Método para borrar de la BD un libro:
-
 class LibrosDelete(DeleteView, LoginRequiredMixin):
     model = Libros
     success_url = reverse_lazy("libros")
@@ -139,19 +151,23 @@ class LibrosDelete(DeleteView, LoginRequiredMixin):
 
 #------------------------------------------------------------------------------------------------------------
 
+#Ver figuras:
 class FigurasView(ListView, LoginRequiredMixin):
     model = Figuras
 
+#Agregar Figuras a la BD:
 class FigurasCreate(CreateView, LoginRequiredMixin):
     model = Figuras
     fields = ["nombre", "precio", "imagen"]
     success_url = reverse_lazy("figuras")
 
+#Actualizar los campos:
 class FigurasUpdate(UpdateView, LoginRequiredMixin):
     model = Figuras
     fields = ["nombre", "precio", "imagen"]
     success_url = reverse_lazy("figuras")
 
+#Eliminar los datos:
 class FigurasDelete(DeleteView, LoginRequiredMixin):
     model = Figuras
     success_url = reverse_lazy("figuras")
@@ -159,8 +175,6 @@ class FigurasDelete(DeleteView, LoginRequiredMixin):
 #------------------------------------------------------------------------------------------------------------
 
 #Barra de búsqueda: 
-from django.views.generic import ListView
-from .models import Mangas, Libros, Comics
 
 class SearchResultsView(ListView):
     template_name = 'gestion/search_results.html'
@@ -171,7 +185,8 @@ class SearchResultsView(ListView):
         object_list = {
             'mangas': Mangas.objects.filter(nombre__icontains=query),
             'libros': Libros.objects.filter(nombre__icontains=query),
-            'comics': Comics.objects.filter(nombre__icontains=query)
+            'comics': Comics.objects.filter(nombre__icontains=query),
+            'figuras': Figuras.objects.filter(nombre__icontains=query)
         }
         return object_list
 
@@ -181,3 +196,7 @@ class SearchResultsView(ListView):
         context['query'] = self.request.GET.get('q')
         return context
 #------------------------------------------------------------------------------------------------------------
+
+#Apartado de "Acerca De"
+def acerca(request):
+    return render(request, 'gestion/acercaDeMi.html')
