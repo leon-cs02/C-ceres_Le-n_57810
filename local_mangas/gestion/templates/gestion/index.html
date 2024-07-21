@@ -18,6 +18,9 @@
     <div class="navegacion">
         <nav class="menu">
             <ul>
+                <li class="listas">
+                    <a href="#" id="menu-toggle"><i class="fas fa-bars"></i> Menú</a>
+                </li>
                 <h1 class="logo">
                     <i class="fas fa-book"></i> logo
                 </h1>
@@ -26,34 +29,40 @@
                 </li>
 
                 {% if user.is_authenticated %}
-                    <li class="listas">
+                        <!-- Sidebar -->
+                    <div id="sidebar" class="sidebar">
+                            <!--Perfil-->
+                        <li class="listas">
+                            <a href="{% url 'profile' %}">
+                                <div class="profile-container">
+                                    {% if user.profile.image %}
+                                        <img src="{{ user.profile.image.url }}" class="profile-pic">
+                                    {% else %}
+                                        <img src="{{ MEDIA_URL }}avatar_default.jpg" class="profile-pic">
+                                    {% endif %}
+                                    {{ user.first_name }} {{ user.last_name }}
+                                </div>
+                            </a>
+                        </li>
+                        <a href="#" class="closebtn" id="close-sidebar">&times;</a>
                         <a href="{% url 'mangas' %}"><i class="fas fa-book-open"></i> Mangas</a>
-                    </li>
-                    <li class="listas">
                         <a href="{% url 'comics' %}"><i class="fas fa-book-open"></i> Comics</a>
-                    </li>
-                    <li class="listas">
                         <a href="{% url 'libros' %}"><i class="fas fa-book-reader"></i> Libros</a>
-                    </li>
-                    <li class="listas">
                         <a href="{% url 'figuras' %}"><i class="fa-solid fa-dragon"></i> Figuras</a>
-                    </li>
+                    </div>
+                    <!--Buscador-->
                     <li class="listas">
-                        <a href="{% url 'profile' %}">
-                            <div class="profile-container">
-                                {% if user.profile.image %}
-                                    <img src="{{ user.profile.image.url }}" class="profile-pic">
-                                {% else %}
-                                    <img src="{{ MEDIA_URL }}avatar_default.jpg" class="profile-pic">
-                                {% endif %}
-                                {{ user.first_name }} {{ user.last_name }}
-                            </div>
-                        </a>
+                        <form method="get" action="{% url 'search_results' %}" class="search-form">
+                            <input type="text" name="q" placeholder="Buscar...">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
                     </li>
+                    
+                    <!--Autenticación-->
                     <li class="listas">
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class=""><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+                            <button type="submit" class="btn_agregar_mangas"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
                         </form>
                     </li>
                 {% else %}
@@ -64,18 +73,14 @@
                         <a href="{% url 'signup' %}"><i class="fas fa-user-plus"></i> Registrarse</a>
                     </li>
                 {% endif %}
-                <li class="listas">
-                    <form method="get" action="{% url 'search_results' %}" class="search-form">
-                        <input type="text" name="q" placeholder="Buscar...">
-                        <button type="submit"><i class="fas fa-search"></i></button>
-                    </form>
-                </li>
+                
             </ul>
         </nav>
     </div>
 
-    {% block contenido %}
 
+
+    {% block contenido %}
     <!---Galería de productos--->
     <div class="galeria-productos">
         <h2>Mangas</h2>
@@ -121,10 +126,7 @@
                 </div>
             {% endfor %}
         </div>
-
     </div>
-
-    
     {% endblock contenido %}
 
     <!--Footer con datos personales-->
@@ -138,5 +140,7 @@
             </ul>
         </div>
     </footer>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>

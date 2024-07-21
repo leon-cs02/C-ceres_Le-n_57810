@@ -1,19 +1,17 @@
 {% extends 'gestion/index.html' %}
 
 {% block titulo %}
-<title>Figuras</title>
+<title>Resultados de búsqueda de Figuras</title>
 {% endblock titulo %}
 
 {% block contenido %}
 <div class="lista_mangas">
-    <h1>Lista de Figuras</h1>
+    <h1>Resultados de búsqueda de Figuras</h1>
     <table>
         <tr>
             <td>
                 <button class="btn_agregar_mangas">
-                    <a href="{% url 'figurasCreate' %}" class="btn btn-primary btn-sm">
-                        <i class="fa fa-plus fa-lg" title="agregar"></i> Agregar
-                    </a>
+                    <a href="{% url 'figuras' %}">Volver a la lista de Figuras</a>
                 </button>
             </td>
             <td>
@@ -22,8 +20,6 @@
                     <button type="submit"><i class="fa fa-search"></i> Buscar</button>
                 </form>
             </td>
-        </tr>
-    </table>
     <table class="styled-table">
         <thead>
             <tr>

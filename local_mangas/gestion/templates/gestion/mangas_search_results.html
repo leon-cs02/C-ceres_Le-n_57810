@@ -1,19 +1,17 @@
 {% extends 'gestion/index.html' %}
 
 {% block titulo %}
-<title>Mangas</title>
+<title>Resultados de búsqueda de Mangas</title>
 {% endblock titulo %}
 
 {% block contenido %}
 <div class="lista_mangas">
-    <h1>Lista de Mangas</h1>
+    <h1>Resultados de búsqueda de Mangas</h1>
     <table>
         <tr>
             <td>
                 <button class="btn_agregar_mangas">
-                    <a href="{% url 'mangasCreate' %}" class="btn btn-primary btn-sm">
-                        <i class="fa fa-plus fa-lg" title="agregar"></i> Agregar
-                    </a>
+                    <a href="{% url 'mangas' %}">Volver a la lista de Mangas</a>
                 </button>
             </td>
             <td>
@@ -23,8 +21,6 @@
                     <button type="submit"><i class="fa fa-search"></i> Buscar</button>
                 </form>
             </td>
-        </tr>
-    </table>
     <table class="styled-table">
         <thead>
             <tr>

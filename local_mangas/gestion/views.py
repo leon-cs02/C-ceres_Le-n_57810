@@ -98,6 +98,20 @@ class MangasDelete(DeleteView, LoginRequiredMixin):
     model = Mangas
     success_url = reverse_lazy("mangas")
 
+#Filtro:
+
+class MangasSearchResultsView(ListView):
+    model = Mangas
+    template_name = 'gestion/mangas_search_results.html'
+    context_object_name = 'mangas_list'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        tomo = self.request.GET.get('tomo')
+        if tomo:
+            return Mangas.objects.filter(nombre__icontains=query, tomo=tomo)
+        return Mangas.objects.filter(nombre__icontains=query)
+
 #------------------------------------------------------------------------------------------------------------
 
 #Métodos pertenecientes al Model Cómics:
@@ -122,6 +136,17 @@ class ComicsUpdate(UpdateView, LoginRequiredMixin):
 class ComicsDelete(DeleteView, LoginRequiredMixin):
     model = Comics
     success_url = reverse_lazy("comics")
+
+#Filtro:
+
+class ComicsSearchResultsView(ListView):
+    model = Comics
+    template_name = 'gestion/comics_search_results.html'
+    context_object_name = 'comics_list'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Comics.objects.filter(nombre__icontains=query)
 
 #------------------------------------------------------------------------------------------------------------
 
@@ -148,6 +173,17 @@ class LibrosDelete(DeleteView, LoginRequiredMixin):
     model = Libros
     success_url = reverse_lazy("libros")
 
+#Filtro:
+
+class LibrosSearchResultsView(ListView):
+    model = Libros
+    template_name = 'gestion/libros_search_results.html'
+    context_object_name = 'libros_list'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Libros.objects.filter(nombre__icontains=query)
+
 
 #------------------------------------------------------------------------------------------------------------
 
@@ -171,6 +207,17 @@ class FigurasUpdate(UpdateView, LoginRequiredMixin):
 class FigurasDelete(DeleteView, LoginRequiredMixin):
     model = Figuras
     success_url = reverse_lazy("figuras")
+
+#Filtro:
+
+class FigurasSearchResultsView(ListView):
+    model = Figuras
+    template_name = 'gestion/figuras_search_results.html'
+    context_object_name = 'figuras_list'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Figuras.objects.filter(nombre__icontains=query)
 
 #------------------------------------------------------------------------------------------------------------
 

@@ -50,6 +50,10 @@ urlpatterns = [
     #Barra de búsqueda:
 
     path('search/', SearchResultsView.as_view(), name='search_results'),
+    path('mangas/search/', MangasSearchResultsView.as_view(), name='mangas_search'),
+    path('libros/search/', LibrosSearchResultsView.as_view(), name='libros_search'),
+    path('comics/search/', ComicsSearchResultsView.as_view(), name='comics_search'),
+    path('figuras/search/', FigurasSearchResultsView.as_view(), name='figuras_search'),
 
     #Acerca de mi:
 
