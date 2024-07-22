@@ -5,13 +5,36 @@
 {% endblock titulo %}
 
 {% block contenido %}
-<div class="container">
-    <h1>Perfil de {{ user.username }}</h1>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ u_form.as_p }}
-        {{ p_form.as_p }}
-        <button class="btn_agregar_mangas" type="submit"><i class="fas fa-user"></i>Actualizar Perfil</button>
-    </form>
+<div class="container-profile-container">
+    <div class="profile-pic">
+        {% if user.profile.image %}
+            <img src="{{ user.profile.image.url }}" alt="Foto de perfil" class="profile-pic">
+        {% else %}
+            <img src="{{ MEDIA_URL }}avatar_default.jpg" alt="Foto de perfil" class="profile-pic">
+        {% endif %}
+    </div>
+    <div class="dtl-info-profile">
+        <div class="profile-info profile-info-username">
+            <strong>Usuario:</strong> {{ user.username }}
+        </div>
+        <div class="profile-info profile-info-firstname">
+            <strong>Nombre:</strong> {{ user.first_name }}
+        </div>
+        <div class="profile-info profile-info-lastname">
+            <strong>Apellido:</strong> {{ user.last_name }}
+        </div>
+        <div class="profile-info">
+            <strong>Email:</strong> {{ user.email }}
+        </div>
+    </div>
+
+    <div class="div-form-profile">
+        <form method="POST" enctype="multipart/form-data" class="profile-form">
+            {% csrf_token %}
+            {{ u_form.as_p }}
+            {{ p_form.as_p }}
+            <button type="submit" class="btn_agregar_mangas"><i class="fas fa-user"></i> Actualizar Perfil</button>
+        </form>
+    </div>
 </div>
 {% endblock contenido %}

@@ -16,13 +16,16 @@ class CustomUserCreationForm(UserCreationForm):
 
 #forms para edición de perfil de usuarios:
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
         fields = ['username', 'email']
 
 class ProfileUpdateForm(forms.ModelForm):
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+
     class Meta:
         model = Profile
         fields = ['image']
@@ -65,4 +68,4 @@ class ComicsForm(forms.ModelForm):
 class FigurasForm(forms.ModelForm):
     class Meta:
         model = Figuras
-        fields = ['nombre','precio','imagen']
+        fields = ['nombre','precio','cantidad_stock','imagen']

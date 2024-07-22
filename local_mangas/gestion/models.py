@@ -53,6 +53,7 @@ class Comics(models.Model):
 class Figuras(models.Model):
     nombre = models.CharField(max_length=250)
     precio = models.DecimalField(max_digits=10, decimal_places=2) 
+    cantidad_stock = models.IntegerField()
     imagen = models.ImageField(upload_to='figuras_images/')
 
     def __str__(self):

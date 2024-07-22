@@ -27,6 +27,12 @@
                 <li class="listas">
                     <a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a>
                 </li>
+                <li class="listas">
+                    <form method="get" action="{% url 'search_results' %}" class="search-form">
+                        <input type="text" name="q" placeholder="Buscar...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </li>
 
                 {% if user.is_authenticated %}
                         <!-- Sidebar -->
@@ -51,12 +57,7 @@
                         <a href="{% url 'figuras' %}"><i class="fa-solid fa-dragon"></i> Figuras</a>
                     </div>
                     <!--Buscador-->
-                    <li class="listas">
-                        <form method="get" action="{% url 'search_results' %}" class="search-form">
-                            <input type="text" name="q" placeholder="Buscar...">
-                            <button type="submit"><i class="fas fa-search"></i></button>
-                        </form>
-                    </li>
+                    
                     
                     <!--Autenticación-->
                     <li class="listas">

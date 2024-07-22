@@ -194,13 +194,13 @@ class FigurasView(ListView, LoginRequiredMixin):
 #Agregar Figuras a la BD:
 class FigurasCreate(CreateView, LoginRequiredMixin):
     model = Figuras
-    fields = ["nombre", "precio", "imagen"]
+    fields = ["nombre", "precio","cantidad_stock", "imagen"]
     success_url = reverse_lazy("figuras")
 
 #Actualizar los campos:
 class FigurasUpdate(UpdateView, LoginRequiredMixin):
     model = Figuras
-    fields = ["nombre", "precio", "imagen"]
+    fields = ["nombre", "precio","cantidad_stock", "imagen"]
     success_url = reverse_lazy("figuras")
 
 #Eliminar los datos:

@@ -30,12 +30,8 @@
                 <th>Imagen</th>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Marca</th>
-                <th>Material</th>
-                <th>Altura</th>
-                <th>Edición</th>
-                <th>Cantidad en Stock</th>
                 <th>Precio</th>
+                <th>Cantidad en Stock</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -51,12 +47,8 @@
                 </td>
                 <td>{{ figura.id }}</td>
                 <td>{{ figura.nombre }}</td>
-                <td>{{ figura.marca }}</td>
-                <td>{{ figura.material }}</td>
-                <td>{{ figura.altura }}</td>
-                <td>{{ figura.edicion }}</td>
-                <td>{{ figura.cantidad_stock }}</td>
                 <td>{{ figura.precio }}</td>
+                <td>{{ figura.cantidad_stock }}</td>
                 <td>
                     <a href="{% url 'figurasUpdate' figura.id %}" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="fa fa-edit fa-sm" title="Edit Record"></i></a>
                     <a href="{% url 'figurasDelete' figura.id %}" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="fa fa-trash fa-sm" title="Delete Record"></i></a>
