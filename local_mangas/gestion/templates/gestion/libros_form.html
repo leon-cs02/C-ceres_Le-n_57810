@@ -5,17 +5,17 @@
 {% endblock titulo %}
 
 {% block contenido %}
-
-<div class="container">
-
-    <h1>Ingresar libros al sistema</h1>
+<div class="form-container">
+    <h1>Ingresar Libros al Sistema</h1>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
-            {{ form }}
+            {{ form.as_p }}
         </div>
-        <button class="btn_agregar_mangas" type="submit">Agregar</button>
-        <button class="btn_agregar_mangas" type="button" onclick="window.history.back();">Cancelar</button>
+        <div class="form-buttons">
+            <button class="btn-agregar" type="submit">Agregar</button>
+            <button class="btn-cancelar" type="button" onclick="window.history.back();">Cancelar</button>
+        </div>
     </form>
 </div>
 {% endblock contenido %}

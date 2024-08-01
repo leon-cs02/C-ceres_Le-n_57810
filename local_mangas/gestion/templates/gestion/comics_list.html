@@ -58,8 +58,8 @@
                 <td>{{ comic.cantidad_stock }}</td>
                 <td>{{ comic.precio }}</td>
                 <td>
-                    <a href="{% url 'comicsUpdate' comic.id %}" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="fa fa-edit fa-sm" title="Edit Record"></i></a>
-                    <a href="{% url 'comicsDelete' comic.id %}" class="btn btn-danger" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="fa fa-trash fa-sm" title="Delete Record"></i></a>
+                    <a href="{% url 'comicsUpdate' comic.id %}" class="btn-edit"><i class="fa fa-edit fa-sm" title="Edit Record"></i></a>
+                    <a href="{% url 'comicsDelete' comic.id %}" class="btn-delete"><i class="fa fa-trash fa-sm" title="Delete Record"></i></a>
                 </td>
             </tr>
             {% endfor %}

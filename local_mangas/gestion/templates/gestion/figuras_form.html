@@ -5,17 +5,17 @@
 {% endblock titulo %}
 
 {% block contenido %}
-
-<div class="container">
-
-    <h1>Ingresar Figuras al sistema</h1>
+<div class="form-container">
+    <h1>Ingresar Figuras al Sistema</h1>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-            <table class="form-table">
-            {{ form.as_table }}
-            </table>
-        <button class="btn_agregar_mangas" type="submit">Agregar</button>
-        <button class="btn_agregar_mangas" type="button" onclick="window.history.back();">Cancelar</button>
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <div class="form-buttons">
+            <button class="btn-agregar" type="submit">Agregar</button>
+            <button class="btn-cancelar" type="button" onclick="window.history.back();">Cancelar</button>
+        </div>
     </form>
 </div>
 {% endblock contenido %}

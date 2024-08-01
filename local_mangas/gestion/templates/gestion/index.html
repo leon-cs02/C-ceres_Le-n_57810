@@ -18,9 +18,11 @@
     <div class="navegacion">
         <nav class="menu">
             <ul>
-                <li class="listas">
-                    <a href="#" id="menu-toggle"><i class="fas fa-bars"></i> Menú</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="listas">
+                        <a href="#" id="menu-toggle"><i class="fas fa-bars"></i> Menú</a>
+                    </li>
+                {% endif %}
                 <h1 class="logo">
                     <i class="fas fa-book"></i> logo
                 </h1>
@@ -44,17 +46,19 @@
                                     {% if user.profile.image %}
                                         <img src="{{ user.profile.image.url }}" class="profile-pic">
                                     {% else %}
-                                        <img src="{{ MEDIA_URL }}avatar_default.jpg" class="profile-pic">
+                                        <img src="{{ MEDIA_URL }} profile_pics/avatar_default.jpg" class="profile-pic">
                                     {% endif %}
                                     {{ user.first_name }} {{ user.last_name }}
                                 </div>
                             </a>
                         </li>
                         <a href="#" class="closebtn" id="close-sidebar">&times;</a>
-                        <a href="{% url 'mangas' %}"><i class="fas fa-book-open"></i> Mangas</a>
-                        <a href="{% url 'comics' %}"><i class="fas fa-book-open"></i> Comics</a>
-                        <a href="{% url 'libros' %}"><i class="fas fa-book-reader"></i> Libros</a>
-                        <a href="{% url 'figuras' %}"><i class="fa-solid fa-dragon"></i> Figuras</a>
+                        {% if user.is_staff %}
+                            <a href="{% url 'mangas' %}"><i class="fas fa-book-open"></i> Mangas</a>
+                            <a href="{% url 'comics' %}"><i class="fas fa-book-open"></i> Comics</a>
+                            <a href="{% url 'libros' %}"><i class="fas fa-book-reader"></i> Libros</a>
+                            <a href="{% url 'figuras' %}"><i class="fa-solid fa-dragon"></i> Figuras</a>
+                        {% endif %}
                     </div>
                     <!--Buscador-->
                     
@@ -82,52 +86,52 @@
 
 
     {% block contenido %}
-    <!---Galería de productos--->
-    <div class="galeria-productos">
-        <h2>Mangas</h2>
-        <div class="productos">
-            {% for manga in mangas %}
-                <div class="producto">
-                    <img src="{{ manga.imagen.url }}" alt="{{ manga.nombre }}">
-                    <h3>{{ manga.nombre }}</h3>
-                    <p>Precio: ${{ manga.precio }}</p>
-                </div>
-            {% endfor %}
-        </div>
+        <!---Galería de productos--->
+        <div class="galeria-productos">
+            <h2>Mangas</h2>
+            <div class="productos">
+                {% for manga in mangas %}
+                    <div class="producto">
+                        <img src="{{ manga.imagen.url }}" alt="{{ manga.nombre }}">
+                        <h3>{{ manga.nombre }}</h3>
+                        <p>Precio: ${{ manga.precio }}</p>
+                    </div>
+                {% endfor %}
+            </div>
 
-        <h2>Libros</h2>
-        <div class="productos">
-            {% for libro in libros %}
-                <div class="producto">
-                    <img src="{{ libro.imagen.url }}" alt="{{ libro.nombre }}">
-                    <h3>{{ libro.nombre }}</h3>
-                    <p>Precio: ${{ libro.precio }}</p>
-                </div>
-            {% endfor %}
-        </div>
+            <h2>Libros</h2>
+            <div class="productos">
+                {% for libro in libros %}
+                    <div class="producto">
+                        <img src="{{ libro.imagen.url }}" alt="{{ libro.nombre }}">
+                        <h3>{{ libro.nombre }}</h3>
+                        <p>Precio: ${{ libro.precio }}</p>
+                    </div>
+                {% endfor %}
+            </div>
 
-        <h2>Comics</h2>
-        <div class="productos">
-            {% for comic in comics %}
-                <div class="producto">
-                    <img src="{{ comic.imagen.url }}" alt="{{ comic.nombre }}">
-                    <h3>{{ comic.nombre }}</h3>
-                    <p>Precio: ${{ comic.precio }}</p>
-                </div>
-            {% endfor %}
-        </div>
+            <h2>Comics</h2>
+            <div class="productos">
+                {% for comic in comics %}
+                    <div class="producto">
+                        <img src="{{ comic.imagen.url }}" alt="{{ comic.nombre }}">
+                        <h3>{{ comic.nombre }}</h3>
+                        <p>Precio: ${{ comic.precio }}</p>
+                    </div>
+                {% endfor %}
+            </div>
 
-        <h2>Figuras</h2>
-        <div class="productos">
-            {% for figura in figuras %}
-                <div class="producto">
-                    <img src="{{ figura.imagen.url }}" alt="{{ figura.nombre }}">
-                    <h3>{{ figura.nombre }}</h3>
-                    <p>Precio: ${{ figura.precio }}</p>
-                </div>
-            {% endfor %}
+            <h2>Figuras</h2>
+            <div class="productos">
+                {% for figura in figuras %}
+                    <div class="producto">
+                        <img src="{{ figura.imagen.url }}" alt="{{ figura.nombre }}">
+                        <h3>{{ figura.nombre }}</h3>
+                        <p>Precio: ${{ figura.precio }}</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
     {% endblock contenido %}
 
     <!--Footer con datos personales-->

@@ -5,12 +5,12 @@
 {% endblock titulo %}
 
 {% block contenido %}
-<div class="container">
+<div class="signup-container">
     <h2>Registro</h2>
-    <form method="POST">
+    <form method="POST" class="signup-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn_agregar_mangas"><i class="fas fa-user-plus"></i> Registrarse</button>
+        <button type="submit" class="btn_registrarse"><i class="fas fa-user-plus"></i> Registrarse</button>
     </form>
 </div>
 {% endblock contenido %}

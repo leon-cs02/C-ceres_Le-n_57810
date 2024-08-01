@@ -5,7 +5,7 @@ from django.views.generic import CreateView, ListView, DeleteView, UpdateView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserUpdateForm, ProfileUpdateForm
@@ -17,6 +17,7 @@ from gestion.forms import *
 from django.contrib.auth.decorators import login_required
 from .models import Mangas, Libros, Comics
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 
 # Métodos para visualizar en la página los html
 
@@ -25,7 +26,7 @@ def index(request):
     mangas = Mangas.objects.all()[:4]  # Traer los primeros 4 mangas
     libros = Libros.objects.all()[:4]  # Traer los primeros 4 libros
     comics = Comics.objects.all()[:4]  # Traer los primeros 4 cómics
-    figuras =  Figuras.objects.all()[:4]
+    figuras =  Figuras.objects.all()[:4] # Traer las primeros 4 figuras
     context = {
         'mangas': mangas,
         'libros': libros,
@@ -36,6 +37,20 @@ def index(request):
     return render(request, 'gestion/index.html', context)
 
 #------------------------------------------------------------------------------------------------------------
+
+#Creamos la vista restringida para que los administradores sean capaces de realizar ciertas acciones
+
+class AdminRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_staff
+
+    def handle_no_permission(self):
+        if self.raise_exception:
+            raise PermissionDenied(self.get_permission_denied_message())
+        return super().handle_no_permission()
+
+#------------------------------------------------------------------------------------------------------------
+
 
 #Utilizo CBV para modificar el perfil de usuario, validar los métodos get y post, guardar los datos y finalizar
 #con un mensaje que indique que su perfil fue modificado:
@@ -78,29 +93,29 @@ class SignUpView(CreateView):
 
 
 #Ver mangas:
-class MangasView(ListView, LoginRequiredMixin):
+class MangasView(ListView, AdminRequiredMixin):
     model = Mangas
 
 #Subir mangas a la BD:
-class MangasCreate(CreateView, LoginRequiredMixin):
+class MangasCreate(CreateView, AdminRequiredMixin):
     model = Mangas
     fields = ["nombre","tomo","editorial","autor","demografia","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("mangas")
 
 #Actualizar los datos de la BD de los mangas:
-class MangasUpdate(UpdateView, LoginRequiredMixin):
+class MangasUpdate(UpdateView, AdminRequiredMixin):
     model = Mangas
     fields = ["nombre","tomo","editorial","autor","demografia","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("mangas")
 
 #Borrar datos en la BD:
-class MangasDelete(DeleteView, LoginRequiredMixin):
+class MangasDelete(DeleteView, AdminRequiredMixin):
     model = Mangas
     success_url = reverse_lazy("mangas")
 
 #Filtro:
 
-class MangasSearchResultsView(ListView):
+class MangasSearchResultsView(ListView, AdminRequiredMixin):
     model = Mangas
     template_name = 'gestion/mangas_search_results.html'
     context_object_name = 'mangas_list'
@@ -117,29 +132,29 @@ class MangasSearchResultsView(ListView):
 #Métodos pertenecientes al Model Cómics:
 
 #Ver Cómics:
-class ComicsView(ListView, LoginRequiredMixin):
+class ComicsView(ListView, AdminRequiredMixin):
     model = Comics
 
 #Subir cómics a la BD:
-class ComicsCreate(CreateView, LoginRequiredMixin):
+class ComicsCreate(CreateView, AdminRequiredMixin):
     model = Comics
     fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("comics")
 
 #Actualizar los datos de la BD de los Cómics:
-class ComicsUpdate(UpdateView, LoginRequiredMixin):
+class ComicsUpdate(UpdateView, AdminRequiredMixin):
     model = Comics
     fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("comics")
 
 #Borrar datos en la BD:
-class ComicsDelete(DeleteView, LoginRequiredMixin):
+class ComicsDelete(DeleteView, AdminRequiredMixin):
     model = Comics
     success_url = reverse_lazy("comics")
 
 #Filtro:
 
-class ComicsSearchResultsView(ListView):
+class ComicsSearchResultsView(ListView, AdminRequiredMixin):
     model = Comics
     template_name = 'gestion/comics_search_results.html'
     context_object_name = 'comics_list'
@@ -153,29 +168,29 @@ class ComicsSearchResultsView(ListView):
 #Métodos pertenecientes al model Libros:
 
 #Ver libros:
-class LibrosView(ListView, LoginRequiredMixin):
+class LibrosView(ListView, AdminRequiredMixin):
     model = Libros
 
 #Método para agregar a la BD:
-class LibrosCreate(CreateView, LoginRequiredMixin):
+class LibrosCreate(CreateView, AdminRequiredMixin):
     model = Libros
     fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("libros")
 
 #Método para actualizar los campos de los libros:
-class LibrosUpdate(UpdateView, LoginRequiredMixin):
+class LibrosUpdate(UpdateView, AdminRequiredMixin):
     model = Libros
     fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
     success_url = reverse_lazy("libros")
 
 #Método para borrar de la BD un libro:
-class LibrosDelete(DeleteView, LoginRequiredMixin):
+class LibrosDelete(DeleteView, AdminRequiredMixin):
     model = Libros
     success_url = reverse_lazy("libros")
 
 #Filtro:
 
-class LibrosSearchResultsView(ListView):
+class LibrosSearchResultsView(ListView, AdminRequiredMixin):
     model = Libros
     template_name = 'gestion/libros_search_results.html'
     context_object_name = 'libros_list'
@@ -188,29 +203,29 @@ class LibrosSearchResultsView(ListView):
 #------------------------------------------------------------------------------------------------------------
 
 #Ver figuras:
-class FigurasView(ListView, LoginRequiredMixin):
+class FigurasView(ListView, AdminRequiredMixin):
     model = Figuras
 
 #Agregar Figuras a la BD:
-class FigurasCreate(CreateView, LoginRequiredMixin):
+class FigurasCreate(CreateView, AdminRequiredMixin):
     model = Figuras
     fields = ["nombre", "precio","cantidad_stock", "imagen"]
     success_url = reverse_lazy("figuras")
 
 #Actualizar los campos:
-class FigurasUpdate(UpdateView, LoginRequiredMixin):
+class FigurasUpdate(UpdateView, AdminRequiredMixin):
     model = Figuras
     fields = ["nombre", "precio","cantidad_stock", "imagen"]
     success_url = reverse_lazy("figuras")
 
 #Eliminar los datos:
-class FigurasDelete(DeleteView, LoginRequiredMixin):
+class FigurasDelete(DeleteView, AdminRequiredMixin):
     model = Figuras
     success_url = reverse_lazy("figuras")
 
 #Filtro:
 
-class FigurasSearchResultsView(ListView):
+class FigurasSearchResultsView(ListView, AdminRequiredMixin):
     model = Figuras
     template_name = 'gestion/figuras_search_results.html'
     context_object_name = 'figuras_list'
