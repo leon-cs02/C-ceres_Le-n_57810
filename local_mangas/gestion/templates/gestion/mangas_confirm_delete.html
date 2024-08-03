@@ -1,21 +1,25 @@
 {% extends "gestion/index.html" %}
 
-
 {% block titulo %}
 <title>Eliminar Mangas</title>                               
 {% endblock titulo %}
 
-
 {% block contenido %}   
-
 <form action="" method="post">
     {% csrf_token %}   
     <h1>Eliminar Mangas del sistema</h1>
-    <div class="container">     
-        <h1>¿Desea eliminar el Manga? <p>{{ object }}</p></h1>
-        <button class="btn_agregar_mangas" type="submit">Confirmar</button>
-        <button class="btn_agregar_mangas" type="button" onclick="window.history.back();">Cancelar</button>
+    <div class="container">
+        <!-- Contenedor de la imagen -->
+        <div class="image-container">
+            <img src="{{ object.imagen.url }}" alt="{{ object.nombre }}">
+        </div>
+        <h2>¿Desea eliminar el Manga?</h2>
+        <p>Nombre: {{ object.nombre }}</p>
+        <p>Editorial: {{ object.editorial }}</p>
+        <p>Tomo: {{ object.tomo }}</p>
+        <p>Cantidad: {{ object.cantidad_stock }}</p>
+        <button class="btn-confirm" type="submit">Confirmar</button>
+        <button class="btn-cancel" type="button" onclick="window.history.back();">Cancelar</button>
     </div>
 </form>
-
 {% endblock contenido %}

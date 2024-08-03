@@ -29,6 +29,8 @@
                 <li class="listas">
                     <a href="{% url 'index' %}"><i class="fas fa-home"></i> Inicio</a>
                 </li>
+                
+                <!--Buscador-->
                 <li class="listas">
                     <form method="get" action="{% url 'search_results' %}" class="search-form">
                         <input type="text" name="q" placeholder="Buscar...">
@@ -43,12 +45,8 @@
                         <li class="listas">
                             <a href="{% url 'profile' %}">
                                 <div class="profile-container">
-                                    {% if user.profile.image %}
-                                        <img src="{{ user.profile.image.url }}" class="profile-pic">
-                                    {% else %}
-                                        <img src="{{ MEDIA_URL }} profile_pics/avatar_default.jpg" class="profile-pic">
-                                    {% endif %}
-                                    {{ user.first_name }} {{ user.last_name }}
+                                        <img src="{{ user.profile.image.url }}" alt="Foto de perfil" class="profile-pic">
+                                    {{ user.username }}
                                 </div>
                             </a>
                         </li>
@@ -60,7 +58,7 @@
                             <a href="{% url 'figuras' %}"><i class="fa-solid fa-dragon"></i> Figuras</a>
                         {% endif %}
                     </div>
-                    <!--Buscador-->
+
                     
                     
                     <!--Autenticación-->
@@ -139,8 +137,8 @@
         <div class="container-footer">
             <p>Página web 2024 - Comiquería. Todos los derechos reservados.</p>
             <ul class="redes-sociales">
-                <li><a href="mailto:leonmateocaceres705@gmail.com"><i class="fas fa-envelope"></i></a></li>
-                <li><a href="https://www.instagram.com/_leon.cs_/" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
                 <li><a href="{% url 'acerca' %}"><i class="fas fa-info-circle"></i> Acerca de</a></li>
             </ul>
         </div>

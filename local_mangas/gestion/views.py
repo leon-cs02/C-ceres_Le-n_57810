@@ -58,6 +58,10 @@ class AdminRequiredMixin(UserPassesTestMixin):
 class CustomLoginView(LoginView):
     template_name = 'login.html'
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='avatar_default.png', upload_to='media')
+
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'profile.html'
 
