@@ -6,13 +6,6 @@
 
 {% block contenido %}
 <div class="container-profile-container">
-    <div class="profile-pic">
-        {% if user.profile.image %}
-            <img src="{{ user.profile.image.url }}" alt="Foto de perfil" class="profile-pic">
-        {% else %}
-            <img src="{{ MEDIA_URL }}avatar_default.jpg" alt="Foto de perfil" class="profile-pic">
-        {% endif %}
-    </div>
     <div class="dtl-info-profile">
         <div class="profile-info profile-info-username">
             <strong>Usuario:</strong> {{ user.username }}
