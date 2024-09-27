@@ -42,6 +42,9 @@ INSTALLED_APPS = [
 
     #app proyecto
     'gestion.apps.GestionConfig',
+
+    #app clientes
+    'tienda',
 ]
 
 MIDDLEWARE = [

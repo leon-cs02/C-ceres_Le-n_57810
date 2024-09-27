@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Iconos sacados de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>Local de Mangas</title>
+
+    <link href="{% static 'css/stylesClientes.css' %}" rel="stylesheet" />
+</head>
+<body>
+    <!--Barra de navegación--->
+    <div class="navegacion">
+        <nav class="menu">
+            <ul>
+                {% if user.is_authenticated %}
+                    <li class="listas">
+                        <a href="#" id="menu-toggle"><i class="fas fa-bars"></i> Menú</a>
+                    </li>
+                {% endif %}
+                <h1 class="logo">
+                    <i class="fas fa-book"></i> logo
+                </h1>
+                <li class="listas">
+                    <a href="{% url 'indexClientes' %}"><i class="fas fa-home"></i> Inicio</a>
+                </li>
+                
+                <!--Buscador-->
+                <li class="listas">
+                    <form method="get" action="{% url 'search_results' %}" class="search-form">
+                        <input type="text" name="q" placeholder="Buscar...">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </li>
+
+                {% if user.is_authenticated %}
+                        <!-- Sidebar -->
+                    <div id="sidebar" class="sidebar">
+                            <!--Perfil-->
+                        <li class="listas">
+                            <a href="{% url 'perfil' %}">
+                                <div class="profile-container">
+                                    {{ user.username }}
+                                </div>
+                            </a>
+                        </li>
+                        <a href="#" class="closebtn" id="close-sidebar">&times;</a>
+                        {% if user.is_staff %}
+                            <a href="{% url 'mangas' %}"><i class="fas fa-book-open"></i> Mangas</a>
+                            <a href="{% url 'comics' %}"><i class="fas fa-book-open"></i> Comics</a>
+                            <a href="{% url 'libros' %}"><i class="fas fa-book-reader"></i> Libros</a>
+                            <a href="{% url 'figuras' %}"><i class="fa-solid fa-dragon"></i> Figuras</a>
+                        {% endif %}
+                    </div>
+
+                    
+                    
+                    <!--Autenticación-->
+                    <li class="listas">
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn_agregar_mangas"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="listas">
+                        <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+                    </li>
+                    <li class="listas">
+                        <a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Registrarse</a>
+                    </li>
+                {% endif %}
+                
+            </ul>
+        </nav>
+    </div>
+
+
+
+    {% block contenido %}
+        <!---Galería de productos--->
+        
+    {% endblock contenido %}
+
+    <!--Footer con datos personales-->
+    <footer class="footer">
+        <div class="container-footer">
+            <p>Página web 2024 - Comiquería. Todos los derechos reservados.</p>
+            <ul class="redes-sociales">
+                <li><a href="#"><i class="fas fa-envelope"></i></a></li>
+                <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="{% url 'acerca' %}"><i class="fas fa-info-circle"></i> Acerca de</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>
