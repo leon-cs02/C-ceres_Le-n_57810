@@ -36,6 +36,7 @@
                 <th>Cantidad de hojas</th>
                 <th>Cantidad en Stock</th>
                 <th>Precio</th>
+                <th>Descripción</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -57,6 +58,7 @@
                 <td>{{ libro.cantidad_hojas }}</td>
                 <td>{{ libro.cantidad_stock }}</td>
                 <td>{{ libro.precio }}</td>
+                <td>{{ libro.descripcion }}</td>
                 <td>
                     <a href="{% url 'librosUpdate' libro.id %}" class="btn-edit"><i class="fa fa-edit fa-sm" title="Edit Record"></i></a>
                     <a href="{% url 'librosDelete' libro.id %}" class="btn-delete"><i class="fa fa-trash fa-sm" title="Delete Record"></i></a>

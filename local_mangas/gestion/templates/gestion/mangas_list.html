@@ -38,6 +38,7 @@
                 <th>Cantidad de hojas</th>
                 <th>Cantidad en Stock</th>
                 <th>Precio</th>
+                <th>Descripción</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -60,6 +61,7 @@
                 <td>{{ manga.cantidad_hojas }}</td>
                 <td>{{ manga.cantidad_stock }}</td>
                 <td>{{ manga.precio }}</td>
+                <td>{{ manga.descripcion }}</td>
                 <td>
                     <a href="{% url 'mangasUpdate' manga.id %}" class="btn-edit"><i class="fa fa-edit fa-sm" title="Edit Record"></i></a>
                     <a href="{% url 'mangasDelete' manga.id %}" class="btn-delete"><i class="fa fa-trash fa-sm" title="Delete Record"></i></a>

@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_admin = models.BooleanField(default=False)
 
@@ -20,6 +19,7 @@ class Mangas(models.Model):
     cantidad_stock = models.IntegerField()
     cantidad_hojas = models.IntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2) 
+    descripcion = models.TextField()
     imagen = models.ImageField(upload_to='mangas_images/')
 
     def __str__(self):
@@ -34,6 +34,7 @@ class Libros(models.Model):
     cantidad_stock = models.IntegerField()
     cantidad_hojas = models.IntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2) 
+    descripcion = models.TextField()
     imagen = models.ImageField(upload_to='libros_images/')
     
     def __str__(self):
@@ -47,6 +48,7 @@ class Comics(models.Model):
     cantidad_stock = models.IntegerField()
     cantidad_hojas = models.IntegerField()
     precio = models.DecimalField(max_digits=10, decimal_places=2) 
+    descripcion = models.TextField()
     imagen = models.ImageField(upload_to='comics_images/')
     
     def __str__(self):
@@ -56,6 +58,7 @@ class Figuras(models.Model):
     nombre = models.CharField(max_length=250)
     precio = models.DecimalField(max_digits=10, decimal_places=2) 
     cantidad_stock = models.IntegerField()
+    descripcion = models.TextField()
     imagen = models.ImageField(upload_to='figuras_images/')
 
     def __str__(self):

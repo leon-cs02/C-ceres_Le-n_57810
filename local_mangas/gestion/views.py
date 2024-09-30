@@ -8,9 +8,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.views import LoginView
-from .forms import CustomUserProfileForm, ProfileUpdateForm
 from django.contrib.auth.models import User
 from .models import Profile
 from gestion.forms import *
@@ -60,27 +58,23 @@ class CustomLoginView(LoginView):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='avatar_default.png', upload_to='media')
 
 class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'profile.html'
 
     def get(self, request, *args, **kwargs):
         u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-        return self.render_to_response({'u_form': u_form, 'p_form': p_form})
+        return self.render_to_response({'u_form': u_form})
 
     def post(self, request, *args, **kwargs):
         u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
 
-        if u_form.is_valid() and p_form.is_valid():
+        if u_form.is_valid():
             u_form.save()
-            p_form.save()
             messages.success(request, f'Se guardaron los datos con éxito!')
             return redirect('profile')
 
-        return self.render_to_response({'u_form': u_form, 'p_form': p_form})
+        return self.render_to_response({'u_form': u_form})
     
 #------------------------------------------------------------------------------------------------------------
 
@@ -103,13 +97,13 @@ class MangasView(ListView, AdminRequiredMixin):
 #Subir mangas a la BD:
 class MangasCreate(CreateView, AdminRequiredMixin):
     model = Mangas
-    fields = ["nombre","tomo","editorial","autor","demografia","cantidad_stock","cantidad_hojas","precio", "imagen"]
+    fields = ["nombre","tomo","editorial","autor","demografia","cantidad_stock","cantidad_hojas","precio", "descripcion", "imagen"]
     success_url = reverse_lazy("mangas")
 
 #Actualizar los datos de la BD de los mangas:
 class MangasUpdate(UpdateView, AdminRequiredMixin):
     model = Mangas
-    fields = ["nombre","tomo","editorial","autor","demografia","cantidad_stock","cantidad_hojas","precio", "imagen"]
+    fields = ["nombre","tomo","editorial","autor","demografia","cantidad_stock","cantidad_hojas","precio", "descripcion", "imagen"]
     success_url = reverse_lazy("mangas")
 
 #Borrar datos en la BD:
@@ -142,13 +136,13 @@ class ComicsView(ListView, AdminRequiredMixin):
 #Subir cómics a la BD:
 class ComicsCreate(CreateView, AdminRequiredMixin):
     model = Comics
-    fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
+    fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "descripcion", "imagen"]
     success_url = reverse_lazy("comics")
 
 #Actualizar los datos de la BD de los Cómics:
 class ComicsUpdate(UpdateView, AdminRequiredMixin):
     model = Comics
-    fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
+    fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "descripcion", "imagen"]
     success_url = reverse_lazy("comics")
 
 #Borrar datos en la BD:
@@ -178,13 +172,13 @@ class LibrosView(ListView, AdminRequiredMixin):
 #Método para agregar a la BD:
 class LibrosCreate(CreateView, AdminRequiredMixin):
     model = Libros
-    fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
+    fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "descripcion", "imagen"]
     success_url = reverse_lazy("libros")
 
 #Método para actualizar los campos de los libros:
 class LibrosUpdate(UpdateView, AdminRequiredMixin):
     model = Libros
-    fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "imagen"]
+    fields = ["nombre","editorial","autor","genero","cantidad_stock","cantidad_hojas","precio", "descripcion", "imagen"]
     success_url = reverse_lazy("libros")
 
 #Método para borrar de la BD un libro:
@@ -213,13 +207,13 @@ class FigurasView(ListView, AdminRequiredMixin):
 #Agregar Figuras a la BD:
 class FigurasCreate(CreateView, AdminRequiredMixin):
     model = Figuras
-    fields = ["nombre", "precio","cantidad_stock", "imagen"]
+    fields = ["nombre", "precio","cantidad_stock", "descripcion", "imagen"]
     success_url = reverse_lazy("figuras")
 
 #Actualizar los campos:
 class FigurasUpdate(UpdateView, AdminRequiredMixin):
     model = Figuras
-    fields = ["nombre", "precio","cantidad_stock", "imagen"]
+    fields = ["nombre", "precio","cantidad_stock", "descripcion", "imagen"]
     success_url = reverse_lazy("figuras")
 
 #Eliminar los datos:

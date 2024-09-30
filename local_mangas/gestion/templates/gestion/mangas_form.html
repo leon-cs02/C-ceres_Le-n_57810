@@ -1,21 +1,32 @@
 {% extends 'gestion/index.html' %}
+{% load static %}
 
 {% block titulo %}
 <title>Ingresar Mangas</title>
 {% endblock titulo %}
 
 {% block contenido %}
-<div class="form-container">
-    <h1>Ingresar Mangas al Sistema</h1>
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-group">
-            {{ form.as_p }}
-        </div>
-        <div class="form-buttons">
-            <button class="btn-agregar" type="submit">Agregar</button>
-            <button class="btn-cancelar" type="button" onclick="window.history.back();">Cancelar</button>
-        </div>
-    </form>
-</div>
+    <div class="form-container">
+        <h1>Ingresar Mangas al Sistema</h1>
+        <!-- El formulario debe tener el action vacío para que sea procesado en la misma vista -->
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <!-- Vista previa de la imagen seleccionada -->
+            <div class="image-preview">
+                <label for="id_imagen">Imagen seleccionada:</label>
+                <img id="preview-image" src="" alt="Vista previa" class="hidden" />
+            </div>
+
+            <!-- Botones dentro del formulario -->
+            <div class="form-buttons">
+                <button class="btn-agregar" type="submit">Agregar</button>
+                <button class="btn-cancelar" type="button" onclick="window.history.back();">Cancelar</button>
+            </div>
+        </form>
+    </div>
+    <script src="{% static 'js/scripts.js' %}"></script>
 {% endblock contenido %}
+

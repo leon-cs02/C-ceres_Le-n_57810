@@ -19,16 +19,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from gestion import views
-from tienda import views
 
 urlpatterns = [
     #gestion urls
     path('admin/', admin.site.urls),
     path('gestion/', include('gestion.urls')),
-    
-
-    #tienda urls
-    path('tienda/', include('tienda.urls')),
-    path('', views.indexClientes, name='indexClientes'),
+    path('', views.index, name='index'),
 ] 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -36,6 +36,7 @@
                 <th>Cantidad de hojas</th>
                 <th>Cantidad en Stock</th>
                 <th>Precio</th>
+                <th>Descripción</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -57,6 +58,7 @@
                 <td>{{ comic.cantidad_hojas }}</td>
                 <td>{{ comic.cantidad_stock }}</td>
                 <td>{{ comic.precio }}</td>
+                <td>{{ comic.descripcion }}</td>
                 <td>
                     <a href="{% url 'comicsUpdate' comic.id %}" class="btn-edit"><i class="fa fa-edit fa-sm" title="Edit Record"></i></a>
                     <a href="{% url 'comicsDelete' comic.id %}" class="btn-delete"><i class="fa fa-trash fa-sm" title="Delete Record"></i></a>

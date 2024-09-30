@@ -731,3 +731,22 @@ body.sidebar-open {
     border-radius: 4px;
 }
 
+/* Contenedor de vista previa de la imagen */
+.image-preview {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#preview-image {
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+    margin: 10px auto;
+    border: 2px solid #ddd;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.hidden {
+    display: none;
+}
